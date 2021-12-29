@@ -25,11 +25,11 @@ class TicketBuilder:
     def set_time(self, _time):
         self._ticket.time = _time
 
-    def set_from(self, _from):
-        self._ticket.from_ = _from
+    def set_from_city(self, _from_city):
+        self._ticket.from_city = _from_city
 
-    def set_to(self, _to):
-        self._ticket.to = _to
+    def set_to(self, _to_city):
+        self._ticket.to_city = _to_city
 
     def set_travel_time(self, _travel_time):
         self._ticket.id = _travel_time

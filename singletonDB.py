@@ -15,10 +15,3 @@ class SingletonDB(metaclass=Singleton):
         self.conn = pyodbc.connect("Driver={SQL Server};Server=DESKTOP-L5ATCHA;Database="
                                    + db
                                    + ";Trusted_Connection=yes;")
-
-    def get_all(self):
-        cursor = self.conn.cursor()
-
-        cursor.close()
-
-        return None
