@@ -11,7 +11,7 @@ class Singleton(type):
 
 
 class SingletonDB(metaclass=Singleton):
-    def __init__(self, db):
+    def __init__(self):
         self.conn = pyodbc.connect("Driver={SQL Server};Server=DESKTOP-L5ATCHA;Database="
-                                   + db
+                                   + "TrainTickets"
                                    + ";Trusted_Connection=yes;")

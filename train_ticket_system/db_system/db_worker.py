@@ -6,14 +6,14 @@ from train_ticket_system.db_system.query_builder import QueryBuilder
 class DBWorker:
     def __init__(self):
         self.query_builder = QueryBuilder()
-        SingletonDB("TrainTickets")
+        SingletonDB()
 
     def get_all(self):
         # query select preset
         self.query_builder.query_select()
 
         temp = pd.read_sql(self.query_builder.get_query(),
-                           SingletonDB("TrainTickets").conn)
+                           SingletonDB().conn)
         temp = temp.applymap(str)
         temp["provider_id"] = "0"
         return temp
@@ -24,12 +24,17 @@ class DBWorker:
 
         # add args
         for key, value in args.items():
-            self.query_builder.add_select_arg(key, value)
+            self.query_builder.add_where_arg(key, value)
 
         # do sql
         temp = pd.read_sql(self.query_builder.get_query(),
-                           SingletonDB("TrainTickets").conn)
+                           SingletonDB().conn)
         # to str
         temp = temp.applymap(str)
         temp["provider_id"] = "0"
         return temp
+
+    def set_status(self, ticket_id, ticket_status):
+        self.query_builder.query_update("[Status]", ticket_status)
+        self.query_builder.add_where_arg("[Id]", ticket_id)
+        SingletonDB().conn.cursor().execute(self.query_builder.get_query())

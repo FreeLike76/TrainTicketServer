@@ -25,8 +25,12 @@ class QueryBuilder:
     def query_select(self):
         self.query = "select * from TicketsInfo "
 
-    def add_select_arg(self, key, value):
-        if key in self.column_mapper.keys():
+    def query_update(self, key, value):
+        self.query = "update Tickets set " + key + " = " + value + " "
+
+    def add_where_arg(self, key, value):
+        #if key in self.column_mapper.keys():
+        if True:
             # if first specification => add where
             if not self.has_where:
                 self.query = self.query + "where "
@@ -39,8 +43,6 @@ class QueryBuilder:
             # add specification
             self.query = self.query + key + " = '" + str(value) + "' "
             self.has_specification = True
-        else:
-            print("Error no such column in DB!")
 
     def get_query(self):
         temp = self.query
