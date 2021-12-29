@@ -28,21 +28,31 @@ class QueryBuilder:
     def query_update(self, key, value):
         self.query = "update Tickets set " + key + " = " + value + " "
 
-    def add_where_arg(self, key, value):
-        #if key in self.column_mapper.keys():
-        if True:
-            # if first specification => add where
-            if not self.has_where:
-                self.query = self.query + "where "
-                self.has_where = True
+    def query_delete(self):
+        self.query = "delete from Tickets "
 
-            # if previously had specification => add and
-            if self.has_specification:
-                self.query = self.query + "and "
+    def query_insert(self, trip, seat_type, seat_num):
+        self.query = "insert into Tickets([Trip], [Type], [SeatNum], [Status]) " \
+                     "values(" + str(trip) + ", " + str(seat_type) + ", " + str(seat_num) + ", " + "0);"
 
-            # add specification
+    def add_where_arg(self, key, value, maps=False):
+        # if first specification => add where
+        if not self.has_where:
+            self.query = self.query + "where "
+            self.has_where = True
+
+        # if previously had specification => add and
+
+        if self.has_specification:
+            self.query = self.query + "and "
+
+        # add specification
+        if maps:
+            self.query = self.query + self.column_mapper[key] + " = '" + str(value) + "' "
+        else:
             self.query = self.query + key + " = '" + str(value) + "' "
-            self.has_specification = True
+
+        self.has_specification = True
 
     def get_query(self):
         temp = self.query

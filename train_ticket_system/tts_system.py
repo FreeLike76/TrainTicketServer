@@ -17,5 +17,11 @@ class TrainTicketSystem:
         res_providers = self.providers.get_by(args)
         return db_res.append(res_providers, ignore_index=True)
 
-    def set_status(self, ticket_id, ticket_status):
-        self.db.set_status(ticket_id, ticket_status)
+    def set_status(self, args):
+        self.db.set_status(args["id"], args["status"])
+
+    def delete_ticket(self, args):
+        self.db.delete_ticket(args["id"])
+
+    def insert_ticket(self, args):
+        self.db.insert_ticket(args["trip_id"], args["seat_type"], args["seat_num"])
