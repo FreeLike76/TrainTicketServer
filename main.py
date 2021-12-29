@@ -1,16 +1,20 @@
-# This is a sample Python script.
+from train_ticket_system.providers_system.providers_facade import Facade
+from flask import Flask, request
+from flask_restful import Resource, Api
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+facade = Facade()
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+class TTSResource(Resource):
+    def get(self):
+        if len(request.args) == 0:
+            return facade.get_all().to_dict(orient="records")
+        else:
+            return facade.get_by(request.args).to_dict(orient="records")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+if __name__ == "__main__":
+    app = Flask(__name__)
+    api = Api(app)
+    api.add_resource(TTSResource, "/tickets")
+    app.run(port=8080, debug=True)
