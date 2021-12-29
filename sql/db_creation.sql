@@ -66,8 +66,8 @@ case
 	when Tickets.[Type] = 1 then Trips.Type1Price
 	when Tickets.[Type] = 2 then Trips.Type2Price
 	when Tickets.[Type] = 3 then Trips.Type3Price
-end as 'Cost',
-Trips.[Id] as ''
+end as 'cost',
+Trips.[Id] as 'trip_id'
 from Tickets
 left join Trips on Trips.[Id] = Tickets.[Trip]
 left join Cities as cf on cf.[Id] = Trips.[CityFrom]
