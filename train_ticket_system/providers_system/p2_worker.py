@@ -52,5 +52,8 @@ class Provider2Worker:
                 temp.at[i, "cost"] = row["seat_type_2_price"]
             elif row["seat_type"] == "3":
                 temp.at[i, "cost"] = row["seat_type_3_price"]
-
-        return temp.drop(["id_", "seat_type_1_price", "seat_type_2_price", "seat_type_3_price"], axis=1)
+        # drop columns
+        for column in ["id_", "seat_type_1_price", "seat_type_2_price", "seat_type_3_price"]:
+            if column in temp.columns:
+                temp = temp.drop(column, axis=1)
+        return temp
