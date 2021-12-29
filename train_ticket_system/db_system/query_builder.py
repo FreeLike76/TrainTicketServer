@@ -31,9 +31,9 @@ class QueryBuilder:
     def query_delete(self):
         self.query = "delete from Tickets "
 
-    def query_insert(self, trip, seat_type, seat_num):
+    def query_insert(self, trip_id, seat_type, seat_num):
         self.query = "insert into Tickets([Trip], [Type], [SeatNum], [Status]) " \
-                     "values(" + str(trip) + ", " + str(seat_type) + ", " + str(seat_num) + ", " + "0);"
+                     "values(" + str(trip_id) + ", " + str(seat_type) + ", " + str(seat_num) + ", " + "0);"
 
     def add_where_arg(self, key, value, maps=False):
         # if first specification => add where
