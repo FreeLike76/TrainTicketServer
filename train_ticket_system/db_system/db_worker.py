@@ -34,7 +34,7 @@ class DBWorker:
         temp["provider_id"] = "0"
         return temp
 
-    def set_status(self, ticket_id, ticket_status, maps=True):
+    def set_status(self, ticket_id, ticket_status):
         self.query_builder.query_update("[Status]", ticket_status)
         self.query_builder.add_where_arg("id", ticket_id)
         SingletonDB().conn.cursor().execute(self.query_builder.get_query())
