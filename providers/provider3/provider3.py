@@ -1,3 +1,4 @@
+import time
 import pandas as pd
 from flask import Flask, request
 from flask_restful import Resource, Api
@@ -5,8 +6,11 @@ from flask_restful import Resource, Api
 df = pd.read_csv("data/tickets.csv", dtype=str)
 
 
-class Provider1Resource(Resource):
+class Provider3Resource(Resource):
     def get(self):
+        print("sleep started")
+        time.sleep(5)
+        print("sleep end")
         temp = df
         for key, value in request.args.items():
             if key in temp.columns:
@@ -17,5 +21,5 @@ class Provider1Resource(Resource):
 if __name__ == "__main__":
     app = Flask(__name__)
     api = Api(app)
-    api.add_resource(Provider1Resource, "/search")
-    app.run(port=8081, debug=True)
+    api.add_resource(Provider3Resource, "/tickets")
+    app.run(port=8083, debug=True)

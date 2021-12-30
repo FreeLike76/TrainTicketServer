@@ -35,13 +35,13 @@ class DBWorker:
         return temp
 
     def set_status(self, ticket_id, ticket_status):
-        self.query_builder.query_update("[Status]", ticket_status)
-        self.query_builder.add_where_arg("id", ticket_id)
+        self.query_builder.query_update("[status]", ticket_status)
+        self.query_builder.add_where_arg("[id]", ticket_id)
         SingletonDB().conn.cursor().execute(self.query_builder.get_query())
 
     def delete_ticket(self, ticket_id):
         self.query_builder.query_delete()
-        self.query_builder.add_where_arg("id", ticket_id, maps=True)
+        self.query_builder.add_where_arg("[id]", ticket_id)
         SingletonDB().conn.cursor().execute(self.query_builder.get_query())
 
     def insert_ticket(self, trip_id, seat_type, seat_num):

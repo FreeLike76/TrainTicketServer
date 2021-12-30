@@ -1,17 +1,5 @@
 class QueryBuilder:
     def __init__(self):
-        self.column_mapper = {
-            "id": "[Id]",
-            "date": "[CityFromDate]",
-            "time": "[CityFromTime]",
-            "from_city": "[CityFrom]",
-            "to_city": "[CityTo]",
-            "travel_time": "[TravelTime]",
-            "seat_type": "[Type]",
-            "seat_num": "[SeatNum]",
-            "cost": "[Price]",
-            "trip_id": "[Trip]"}
-
         self.query = None
         self.has_where = None
         self.has_specification = None
@@ -32,10 +20,10 @@ class QueryBuilder:
         self.query = "delete from Tickets "
 
     def query_insert(self, trip_id, seat_type, seat_num):
-        self.query = "insert into Tickets([Trip], [Type], [SeatNum], [Status]) " \
+        self.query = "insert into Tickets([trip_id], [seat_type], [seat_num], [status]) " \
                      "values(" + str(trip_id) + ", " + str(seat_type) + ", " + str(seat_num) + ", " + "0);"
 
-    def add_where_arg(self, key, value, maps=False):
+    def add_where_arg(self, key, value):
         # if first specification => add where
         if not self.has_where:
             self.query = self.query + "where "
@@ -47,11 +35,7 @@ class QueryBuilder:
             self.query = self.query + "and "
 
         # add specification
-        if maps:
-            self.query = self.query + self.column_mapper[key] + " = '" + str(value) + "' "
-        else:
-            self.query = self.query + key + " = '" + str(value) + "' "
-
+        self.query = self.query + key + " = '" + str(value) + "' "
         self.has_specification = True
 
     def get_query(self):

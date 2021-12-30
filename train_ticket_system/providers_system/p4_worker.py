@@ -2,21 +2,45 @@ import requests
 import pandas as pd
 
 
-class Provider1Worker:
+class Provider4Worker:
     def __init__(self):
-        self.endpoint = "http://127.0.0.1:8081/search"
+        self.endpoint = "http://127.0.0.1:8084/tickets/"
 
     def get_all(self):
-        response = requests.get(self.endpoint)
+        # read page 1
+        page = 1
+        response = requests.get(self.endpoint + str(page))
         temp = pd.DataFrame(response.json(), dtype=str)
-        temp["provider_id"] = ["1" for x in range(len(temp))]
+
+        # while there are more pages
+        while True:
+            page += 1
+            response = requests.get(self.endpoint + str(page))
+            if str(response.json()) == "[]":
+                break
+            # if data comes append
+            temp.append(pd.DataFrame(response.json(), dtype=str), ignore_index=True)
+
+        temp["provider_id"] = ["4" for x in range(len(temp))]
         return temp
 
     def get_by(self, args):
-        endpoint = self.endpoint + "?"
-        for key, value in args.items():
-            endpoint = endpoint + key + "=" + value + "&"
-        response = requests.get(endpoint[:-1])
+        # read page 1
+        page = 1
+        response = requests.get(self.endpoint + str(page))
         temp = pd.DataFrame(response.json(), dtype=str)
-        temp["provider_id"] = ["1" for x in range(len(temp))]
+        # while there are more pages
+        while True:
+            page += 1
+            response = requests.get(self.endpoint + str(page))
+            if str(response.json()) == "[]":
+                break
+
+            # if data comes append and filter
+            temp.append(pd.DataFrame(response.json(), dtype=str), ignore_index=True)
+            for key, value in args.items():
+                if key in temp.columns:
+                    temp = temp[temp[key] == value]
+
+        temp["provider_id"] = ["4" for x in range(len(temp))]
         return temp

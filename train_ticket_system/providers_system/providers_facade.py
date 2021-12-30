@@ -1,11 +1,15 @@
 from train_ticket_system.providers_system.p1_worker import Provider1Worker
 from train_ticket_system.providers_system.p2_worker import Provider2Worker
+from train_ticket_system.providers_system.p3_worker import Provider3Worker
+from train_ticket_system.providers_system.p4_worker import Provider4Worker
 
 
 class Facade:
     def __init__(self):
-        self.p1 = Provider1Worker()
-        self.p2 = Provider2Worker()
+        #self.p1 = Provider1Worker()
+        #self.p2 = Provider2Worker()
+        self.p1 = Provider3Worker()
+        self.p2 = Provider4Worker()
 
     def get_all(self):
         res1 = self.p1.get_all()

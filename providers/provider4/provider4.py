@@ -3,19 +3,18 @@ from flask import Flask, request
 from flask_restful import Resource, Api
 
 df = pd.read_csv("data/tickets.csv", dtype=str)
+page_size = 5000
 
 
-class Provider1Resource(Resource):
-    def get(self):
-        temp = df
-        for key, value in request.args.items():
-            if key in temp.columns:
-                temp = temp[temp[key] == value]
+class Provider4Resource(Resource):
+    def get(self, page):
+        print("page:", page)
+        temp = df.iloc[page_size * (page - 1): min(page_size * page, len(df))]
         return temp.to_dict(orient="records")
 
 
 if __name__ == "__main__":
     app = Flask(__name__)
     api = Api(app)
-    api.add_resource(Provider1Resource, "/search")
-    app.run(port=8081, debug=True)
+    api.add_resource(Provider4Resource, "/tickets/<int:page>")
+    app.run(port=8084, debug=True)
