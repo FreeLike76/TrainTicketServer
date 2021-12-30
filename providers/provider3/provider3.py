@@ -8,9 +8,8 @@ df = pd.read_csv("data/tickets.csv", dtype=str)
 
 class Provider3Resource(Resource):
     def get(self):
-        print("sleep started")
+        print("sleep")
         time.sleep(5)
-        print("sleep end")
         temp = df
         for key, value in request.args.items():
             if key in temp.columns:

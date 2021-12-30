@@ -4,10 +4,11 @@ import pandas as pd
 
 
 class Provider3Worker:
-    def __init__(self):
+    def __init__(self, cache_update_time):
         self.endpoint = "http://127.0.0.1:8083/tickets"
 
         self.cache_df = None
+        self.cache_update_time = cache_update_time
         self.update_stop = threading.Event()
         self.update()
         # to stop
@@ -28,6 +29,7 @@ class Provider3Worker:
         response = requests.get(self.endpoint)
         self.cache_df = pd.DataFrame(response.json(), dtype=str)
         self.cache_df["provider_id"] = ["3" for x in range(len(self.cache_df))]
+        print("p3_worker cache updated")
         if not self.update_stop.is_set():
             # call f() again in 60 seconds
-            threading.Timer(5, self.update, []).start()
+            threading.Timer(self.cache_update_time, self.update, []).start()

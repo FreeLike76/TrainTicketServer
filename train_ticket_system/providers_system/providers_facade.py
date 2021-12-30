@@ -8,8 +8,8 @@ class Facade:
     def __init__(self):
         #self.p1 = Provider1Worker()
         #self.p2 = Provider2Worker()
-        self.p1 = Provider3Worker()
-        self.p2 = Provider4Worker()
+        self.p1 = Provider3Worker(10)
+        self.p2 = Provider4Worker(10)
 
     def get_all(self):
         res1 = self.p1.get_all()

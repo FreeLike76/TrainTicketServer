@@ -55,4 +55,4 @@ if __name__ == "__main__":
     app = Flask(__name__)
     api = Api(app)
     api.add_resource(TTSResource, "/tickets")
-    app.run(port=8080, debug=True)
+    app.run(port=8080, debug=False)
